@@ -96,9 +96,7 @@ impl Vm {
             _ => { self.pc += 1; Opcode::UNKNOWN(_addr)}
         }
     }
-}
 
-impl Vm {
     pub fn interpret(&mut self) {
 
         let maybe_op = self.next();
@@ -127,9 +125,7 @@ impl Vm {
 
         }
     }
-}
 
-impl Vm {
     pub fn print_stack(&self) {
         self.stack
             .iter()
