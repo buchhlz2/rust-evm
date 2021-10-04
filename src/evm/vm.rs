@@ -49,19 +49,19 @@ impl Vm {
             return Opcode::END;
         }
 
-        let addr = self.pc;
-        match self.code[addr] {
+        let _addr = self.pc;
+        match self.code[_addr] {
             0x00 => {
                 self.pc += 1;
-                Opcode::STOP(addr)
+                Opcode::STOP(_addr)
             },
             0x01 => {
                 self.pc += 1;
-                Opcode::ADD(addr)
+                Opcode::ADD(_addr)
             },
             0x02 => {
                 self.pc += 1;
-                Opcode::MUL(addr)
+                Opcode::MUL(_addr)
             },
             // 0x52 => {
             //     let offset = self.code[pc-2];
@@ -79,13 +79,13 @@ impl Vm {
                 let value = self.code[self.pc+1];
                 println!("{}", value);
                 self.pc += 2;
-                Opcode::PUSH1(addr, value)
+                Opcode::PUSH1(_addr, value)
             },
             0x61 => {
                 let value0 = self.code[self.pc+1];
                 let value1 = self.code[self.pc+1];
                 self.pc += 3;
-                Opcode::PUSH2(addr, value0, value1)
+                Opcode::PUSH2(_addr, value0, value1)
             },
             // 0x7f => {
             //     let value0 = self.code[pc+1];  
@@ -93,7 +93,7 @@ impl Vm {
             //     self.pc += 1;
             //     Some(Opcode::PUSH32(value0, value1))
             // },
-            _ => { self.pc += 1; Opcode::UNKNOWN(addr)}
+            _ => { self.pc += 1; Opcode::UNKNOWN(_addr)}
         }
     }
 }
@@ -111,10 +111,10 @@ impl Vm {
         match &maybe_op {
             x => {
                 match x {
-                    Opcode::PUSH1(addr, value) => {
+                    Opcode::PUSH1(_addr, value) => {
                         self.stack.push(U256::from(*value));
                     },
-                    Opcode::ADD(addr) => {
+                    Opcode::ADD(_addr) => {
                         let v1 = self.stack.pop().unwrap();
                         let v2 = self.stack.pop().unwrap();
                         self.stack.push(v1 + v2);
